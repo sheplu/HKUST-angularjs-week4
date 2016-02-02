@@ -53,3 +53,31 @@ gulp.task('copyfonts', ['clean'], function() {
    gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
    .pipe(gulp.dest('./dist/fonts'));
 });
+
+// Watch
+gulp.task('watch', ['browser-sync'], function() {
+  // Watch .js files
+  gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
+      // Watch image files
+  gulp.watch('app/images/**/*', ['imagemin']);
+
+});
+
+gulp.task('browser-sync', ['default'], function () {
+   var files = [
+      'app/**/*.html',
+      'app/styles/**/*.css',
+      'app/images/**/*.png',
+      'app/scripts/**/*.js',
+      'dist/**/*'
+];
+
+browserSync.init(files, {
+  server: {
+     baseDir: "dist",
+     index: "menu.html"
+  }
+});
+    // Watch any files in dist/, reload on change
+gulp.watch(['dist/**']).on('change', browserSync.reload);
+});
