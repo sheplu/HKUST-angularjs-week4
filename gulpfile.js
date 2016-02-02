@@ -29,3 +29,27 @@ gulp.task('clean', function() {
 gulp.task('default', ['clean'], function() {
     gulp.start('usemin', 'imagemin','copyfonts');
 });
+
+gulp.task('usemin',['jshint'], function () {
+  return gulp.src('./app/menu.html')
+      .pipe(usemin({
+        css:[minifycss(),rev()],
+        js: [uglify(),rev()]
+      }))
+      .pipe(gulp.dest('dist/'));
+});
+
+// Images
+gulp.task('imagemin', function() {
+  return del(['dist/images']), gulp.src('app/images/**/*')
+    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+    .pipe(gulp.dest('dist/images'))
+    .pipe(notify({ message: 'Images task complete' }));
+});
+
+gulp.task('copyfonts', ['clean'], function() {
+   gulp.src('./bower_components/font-awesome/fonts/**/*.{ttf,woff,eof,svg}*')
+   .pipe(gulp.dest('./dist/fonts'));
+   gulp.src('./bower_components/bootstrap/dist/fonts/**/*.{ttf,woff,eof,svg}*')
+   .pipe(gulp.dest('./dist/fonts'));
+});
