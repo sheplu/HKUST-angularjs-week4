@@ -124,11 +124,17 @@ angular.module('confusionApp')
             $scope.promotion = menuFactory.getPromotion(0);
 
             $scope.dish = {};
+            $scope.showDish = false;
+            $scope.message="Loading ...";
+
             menuFactory.getDish(0)
             .then(
                 function(response){
                     $scope.dish = response.data;
                     $scope.showDish = true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+response.status + " " + response.statusText;
                 }
             );
           }])
