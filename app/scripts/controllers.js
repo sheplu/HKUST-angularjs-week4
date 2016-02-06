@@ -120,7 +120,7 @@ angular.module('confusionApp')
            $scope.message="Loading ...";
            $scope.dish = menuFactory.getDishes().get({id:0});
 
-            
+
           }])
 
 .controller('AboutController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
