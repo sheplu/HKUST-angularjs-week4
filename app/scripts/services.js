@@ -39,4 +39,13 @@ angular.module('confusionApp')
 
         }])
 
+        .factory('feedbackFactory',['$resource', 'baseURL', function($resource,baseURL) {
+            var feedFac = {};
+
+            feedFac.sendFeedback = function () {
+              return $resource(baseURL+"feedback",null,  {'create':{method:'POST' }});
+            }
+            return feedFac;
+        }])
+
 ;
